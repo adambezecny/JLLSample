@@ -6,7 +6,12 @@
   "scripts": {
     "test": "mocha",
     "start": "node src/httpServer.js",
-    "lint": "eslint . || echo \"The build won't fail yet, but at least we should be aware of these issues\""
+    "lint": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run lint"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +23,6 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "mocha": "^6.2.0",
     "chai": "^4.2.0",
     "eslint": "^6.1.0",
     "eslint-config-standard": "^13.0.1",
@@ -26,6 +30,8 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
+    "husky": "^3.0.2",
+    "mocha": "^6.2.0",
     "nock": "^10.0.6",
     "supertest": "^4.0.2"
   }
