@@ -21,7 +21,8 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/httpServer.js"
+            "program": "${workspaceFolder}/src/httpServer.js",
+            "outputCapture": "std"
         }        
     ]
 }

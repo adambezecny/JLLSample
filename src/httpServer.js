@@ -1,9 +1,11 @@
+/* eslint-disable no-multiple-empty-lines */
+/* eslint-disable no-fallthrough */
 'use strict'
 
 const app = require('./appExpress')
 const http = require('http')
 const port = normalizePort(process.env.PORT || '3000') // HTTP port
-
+const logger = require('./logger')
 
 let server // HTTP server
 
@@ -41,10 +43,10 @@ function onError (error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
+      logger.error(bind + ' requires elevated privileges')
       process.exit(1)
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
+      logger.error(bind + ' is already in use')
       process.exit(1)
     default:
       throw error
@@ -57,38 +59,38 @@ function onListening () {
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port
-  console.log('Listening on ' + bind)
-  console.log('Listening addr ' + JSON.stringify(addr))
+  logger.info('Listening on ' + bind)
+  logger.info('Listening addr ' + JSON.stringify(addr))
 }
 
 async function initApp () {
-  console.log('initializing the application...')
+  logger.info('initializing the application...')
   app.set('port', port)
 
   server = http.createServer(app).listen(port)
   server.on('error', onError)
   server.on('listening', onListening)
-  console.log('HTTP server is up now')
-  
+  logger.info('HTTP server is up now')
+
 
   //
   // initialize other resources here, e.g. DB!
   //
 
-  console.log('application is up now')
+  logger.info('application is up now')
 }
 
 async function shutdownApp () {
-  console.log('shutting down the application')
+  logger.info('shutting down the application')
 
   await server.close()
 
-  console.log('server is down')
+  logger.info('server is down')
 
   //
   // shut down other resources here, e.g. DB!
   //
-  console.log('application is down now')
+  logger.info('application is down now')
 }
 
 initApp()
@@ -97,9 +99,9 @@ process.on('SIGINT', shutdownApp)
 // In the future, promise rejections that are not handled will terminate
 // the Node.js process with a non-zero exit code!
 process.on('unhandledRejection', (reason, p) => {
-  console.log('Unahndled promise rejection detected!')
-  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason)
-  console.log(reason.stack)
+  logger.info('Unahndled promise rejection detected!')
+  logger.info('Unhandled Rejection at: Promise', p, 'reason:', reason)
+  logger.info(reason.stack)
   logger.trace('Reason full details:')
   logger.trace(reason)
   logger.trace('Promise full details:')
