@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "start": "node src/httpServer.js",
-    "lint": "eslint"
+    "lint": "eslint ."
   },
   "husky": {
     "hooks": {
